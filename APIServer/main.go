@@ -9,6 +9,7 @@ import (
 	"golang.org/x/net/context"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -21,7 +22,7 @@ const (
 
 func connectToInfluxDB() (influxdb2.Client, error) {
 	// Connect to the influx database
-	client := influxdb2.NewClient("http://localhost:8086", "epglU3GItronqqgI4oBIf5AmdbirwMWpA8KOO91do5Zb1WcdqsRNR8_iULSY29sCQe07FwG7Y8izAarIwfcY3w==")
+	client := influxdb2.NewClient(os.Getenv("INFLUXDB_URL"), os.Getenv("INFLUXDB_API_TOKEN"))
 
 	// validate client connection health
 	_, err := client.Health(context.Background())
@@ -30,7 +31,7 @@ func connectToInfluxDB() (influxdb2.Client, error) {
 }
 
 func fetchFromDB(w http.ResponseWriter, r *http.Request) {
-	var weatherData []Structs.Weatherdata
+	var weatherData []Structs.WeatherData
 	queryAPI := dbClient.QueryAPI(dbOrg)
 
 	result, err := queryAPI.Query(context.Background(), `from(bucket: "weather")
@@ -46,7 +47,7 @@ func fetchFromDB(w http.ResponseWriter, r *http.Request) {
 				fmt.Println("Error: value not a float64")
 				continue
 			}
-			data := Structs.Weatherdata{
+			data := Structs.WeatherData{
 				Time:  record.Time().UnixMilli(),
 				Unit:  record.ValueByKey("unit").(string),
 				Value: value,
@@ -77,7 +78,7 @@ func main() {
 	fmt.Println("Starting Server on port 7080")
 	srv := &http.Server{
 		Handler:      r,
-		Addr:         "127.0.0.1:7080",
+		Addr:         "0.0.0.0:7080",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}

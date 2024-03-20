@@ -9,7 +9,20 @@ services:
       - "./DB/influxdb.env"
     develop:
       watch:
-        - path: ./MQTTClient/DB/influxdb.env
+        - path: ./MQTTClient
+          action: rebuild
+
+  api:
+    build:
+      context: ./APIServer
+      target: final
+    ports:
+      - 7080:7080
+    env_file:
+      - "./DB/influxdb.env"
+    develop:
+      watch:
+        - path: ./APIServer
           action: rebuild
 
   influxdb:
