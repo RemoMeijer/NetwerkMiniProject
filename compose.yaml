@@ -1,0 +1,27 @@
+services:
+  server:
+    build:
+      context: ./MQTTClient
+      target: final
+    ports:
+      - 8111:8111
+    env_file:
+      - "./DB/influxdb.env"
+    develop:
+      watch:
+        - path: ./MQTTClient/DB/influxdb.env
+          action: rebuild
+
+  influxdb:
+    image: influxdb:2.0.7
+    env_file:
+      - "./DB/influxdb.env"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD}
+      DOCKER_INFLUXDB_INIT_ORG: iot
+      DOCKER_INFLUXDB_INIT_BUCKET: weather
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN}
+    ports:
+      - "8086:8086"
