@@ -64,9 +64,29 @@ func fetchFromDB(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		w.Write(jsonWeatherData)
+		fmt.Println(jsonWeatherData)
 	} else {
 		panic(err)
 	}
+}
+
+// Allow CORS
+func addCORSHeaders(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Allow requests from all origins
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+
+		// Set other CORS headers as needed
+		w.Header().Set("Access-Control-Allow-Methods", "GET")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
+		handler.ServeHTTP(w, r)
+	})
 }
 
 func main() {
@@ -77,7 +97,7 @@ func main() {
 
 	fmt.Println("Starting Server on port 7080")
 	srv := &http.Server{
-		Handler:      r,
+		Handler:      addCORSHeaders(r),
 		Addr:         "0.0.0.0:7080",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
