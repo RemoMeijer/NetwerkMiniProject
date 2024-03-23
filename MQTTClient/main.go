@@ -39,7 +39,7 @@ func handleMqttMessage(client mqtt.Client, msg mqtt.Message) {
 	}
 
 	// Print the message and put into db
-	fmt.Println(message.ReceivedAt[11:19], "Humidity:", message.UplinkMessage.DecodedPayload.Humi, "% Temp:", message.UplinkMessage.DecodedPayload.Temp, "°C")
+	fmt.Println(message.UplinkMessage.DecodedPayload)
 	insertIntoDB(dbClient, message.UplinkMessage.DecodedPayload)
 }
 
@@ -56,8 +56,14 @@ func connectToInfluxDB() (influxdb2.Client, error) {
 func insertIntoDB(client influxdb2.Client, data DataStructs.DecodedPayload) {
 	// Write data into db
 	writeAPI := client.WriteAPI(dbOrg, dbBucket)
-	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=temperature avg=%d", data.Temp))
-	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=humidity avg=%d", data.Humi))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=altitude avg=%d", data.Temp))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=hourrainfall avg=%d", data.Temp))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=light avg=%d", data.Temp))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=pressure avg=%d", data.Temp))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=rainbuckets avg=%d", data.Temp))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=temp avg=%d", data.Temp))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=totalrain avg=%d", data.Temp))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=uvindex avg=%d", data.Temp))
 	writeAPI.Flush()
 }
 

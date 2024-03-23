@@ -35,10 +35,17 @@ func fetchFromDB(w http.ResponseWriter, r *http.Request) {
 	queryAPI := dbClient.QueryAPI(dbOrg)
 
 	result, err := queryAPI.Query(context.Background(), `from(bucket: "weather")
-			|> range(start: -24h)
+			|> range(start: -1h)
   			|> filter(fn: (r) => r["_measurement"] == "stat")
   			|> filter(fn: (r) => r["_field"] == "avg")
-  			|> filter(fn: (r) => r["unit"] == "humidity" or r["unit"] == "temperature")`)
+  			|> filter(fn: (r) => r["unit"] == "altitude" or 
+								 r["unit"] == "hourrainfall" or
+					  	 	 	 r["unit"] == "light" or 
+							     r["unit"] == "pressure" or 
+								 r["unit"] == "rainbuckets" or
+					  	 	 	 r["unit"] == "temp" or
+								 r["unit"] == "totalrain" or
+					  	 	 	 r["unit"] == "uvindex")`)
 	if err == nil {
 		for result.Next() {
 			record := result.Record()
@@ -63,8 +70,10 @@ func fetchFromDB(w http.ResponseWriter, r *http.Request) {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		w.Write(jsonWeatherData)
-		fmt.Println(jsonWeatherData)
+		_, writeErr := w.Write(jsonWeatherData)
+		if writeErr != nil {
+			return
+		}
 	} else {
 		panic(err)
 	}

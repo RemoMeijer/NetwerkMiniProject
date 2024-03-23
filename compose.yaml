@@ -1,3 +1,9 @@
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
 services:
   server:
     build:
@@ -11,7 +17,9 @@ services:
       watch:
         - path: ./MQTTClient
           action: rebuild
-
+    networks:
+      static-network:
+        ipv4_address: 172.20.0.4
   api:
     build:
       context: ./APIServer
@@ -23,18 +31,9 @@ services:
       watch:
         - path: ./APIServer
           action: rebuild
-
-  web:
-    build:
-      context: FrontEndClient
-    ports:
-      - 80:80
-    volumes:
-      - ./FrontEndClient:/project
-    develop:
-      watch:
-        - path: ./FrontEndClient
-
+    networks:
+      static-network:
+        ipv4_address: 172.20.0.5
   influxdb:
     image: influxdb:2.0.7
     env_file:
@@ -48,3 +47,6 @@ services:
       DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN}
     ports:
       - "8086:8086"
+    networks:
+      static-network:
+        ipv4_address: 172.20.0.3

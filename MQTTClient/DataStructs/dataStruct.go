@@ -39,8 +39,14 @@ type UplinkMessage struct {
 
 // DecodedPayload represents the decoded sensor data
 type DecodedPayload struct {
-	Humi int `json:"humi"`
-	Temp int `json:"temp"`
+	Altitude     int `json:"altitude"`
+	HourRainfall int `json:"hourrainfall"`
+	Light        int `json:"light"`
+	Pressure     int `json:"pressure"`
+	RainBuckets  int `json:"rainbuckets"`
+	Temp         int `json:"temp"`
+	TotalRain    int `json:"totalrain"`
+	UVIndex      int `json:"uvindex"`
 }
 
 // RxMetadata represents the metadata for received signals
