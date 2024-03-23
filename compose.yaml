@@ -5,7 +5,7 @@ networks:
         - subnet: 172.20.0.0/16
 
 services:
-  server:
+  mqttclient:
     build:
       context: ./MQTTClient
       target: final

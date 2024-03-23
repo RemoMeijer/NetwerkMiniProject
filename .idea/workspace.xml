@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment="update">
-      <change afterPath="$PROJECT_DIR$/APIServer/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/APIServer/.idea/APIServer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/APIServer/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/APIServer/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/NetwerkMiniProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NetwerkMiniProject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APIServer/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/APIServer/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB/influxdb.env" beforeDir="false" afterPath="$PROJECT_DIR$/DB/influxdb.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEndClient/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTTClient/DataStructs/dataStruct.go" beforeDir="false" afterPath="$PROJECT_DIR$/MQTTClient/DataStructs/dataStruct.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTTClient/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/MQTTClient/main.go" afterDir="false" />
+    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment="removed web client, gave static ip's">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +82,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="removed web client, gave static ip's" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed web client, gave static ip's" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

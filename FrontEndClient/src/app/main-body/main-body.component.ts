@@ -15,16 +15,16 @@ export class MainBodyComponent implements OnInit {
   }
 
   ngOnInit() {
-    setInterval(() => {
-      this.getData();
-    }, this.dataRefresh);
+    // setInterval(() => {
+    //   this.getData();
+    // }, this.dataRefresh);
   }
 
-  getData() {
-    console.log("Getting them data's")
-    this.httpClient.get("http://localhost:7080").subscribe(data => {
-      console.log(data)
-    })
-  }
+  // getData() {
+  //   console.log("Getting them data's")
+  //   this.httpClient.get("http://localhost:7080").subscribe(data => {
+  //     console.log(data)
+  //   })
+  // }
 
 }
