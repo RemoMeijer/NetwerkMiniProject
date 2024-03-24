@@ -17,6 +17,12 @@ export class HttpService {
 
   constructor(private httpClient: HttpClient) { }
 
+  public postTimeUpdate(s: string) {
+    this.httpClient.post("http://localhost:7080", s).subscribe(reply => {
+      console.log(reply)
+    })
+  }
+
   public getWeatherData() {
     this.httpClient.get("http://localhost:7080").subscribe(data => {
       this.sortData(data);

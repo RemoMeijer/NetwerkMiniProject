@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment="End of day push">
-      <change afterPath="$PROJECT_DIR$/FrontEndClient/src/app/objects/weatherObjects.ts" afterDir="false" />
+    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment="Final-ish product">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEndClient/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/app/app.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FrontEndClient/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/app/app.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEndClient/src/app/http.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/app/http.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEndClient/src/app/main-body/main-body.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/app/main-body/main-body.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FrontEndClient/src/app/main-body/main-body.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/app/main-body/main-body.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEndClient/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEndClient/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,12 +48,13 @@
     "git-widget-placeholder": "master",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/home/remo/NetwerkMiniProject/MQTTClient",
+    "last_opened_file_path": "/home/remo/NetwerkMiniProject",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "vcs.Git",
+    "ts.external.directory.path": "/home/remo/NetwerkMiniProject/FrontEndClient/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -92,14 +93,27 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="javascript:npm:tailwindcss" />
     <option featureType="dependencySupport" implementationName="javascript:npm:karma" />
     <option featureType="dependencySupport" implementationName="javascript:npm:@angular/core" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update" />
     <MESSAGE value="removed web client, gave static ip's" />
     <MESSAGE value="End of day push" />
-    <option name="LAST_COMMIT_MESSAGE" value="End of day push" />
+    <MESSAGE value="Final-ish product" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final-ish product" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

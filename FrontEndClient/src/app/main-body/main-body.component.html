@@ -1,13 +1,40 @@
-<div>
-  <div *ngFor="let dataset of availableDataSets">
-    <input type="checkbox" [(ngModel)]="dataset.show" (click)="updateChart()">
-    {{dataset.name}}
-  </div>
-
+<div class="grid grid-cols-4 my-6">
+  <button (click)="setTime('1h')">1h</button>
+  <button (click)="setTime('6h')">6h</button>
+  <button (click)="setTime('1d')">day</button>
+  <button (click)="setTime('2d')">two days</button>
 </div>
 
-<div class="chart-container">
-  <canvas id="canvas">
-    {{ chart }}
-  </canvas>
+<div class="grid grid-cols-2">
+  <div class="chart-container">
+    <canvas id="tempCanvas">
+      {{ tempChart }}
+    </canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="lightCanvas">
+      {{ lightChart }}
+    </canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="hourrainfallCanvas">
+      {{ hourRainfallChart }}
+    </canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="totalrainCanvas">
+      {{ totalRainChart }}
+    </canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="altitudeCanvas">
+      {{ altitudeChart }}
+    </canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="pressureCanvas">
+      {{ pressureChart }}
+    </canvas>
+  </div>
+
 </div>
