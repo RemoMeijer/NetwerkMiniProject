@@ -7,14 +7,18 @@ import {HttpClientModule} from "@angular/common/http";
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MainBodyComponent, HttpClientModule],
+  imports: [RouterOutlet, MainBodyComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit{
 
   constructor(private httpService: HttpService) {}
+
   ngOnInit(): void {
-    this.httpService.getWeatherData();
+    setInterval(() => {
+      this.httpService.getWeatherData();
+    }, 5000);
   }
+
 }

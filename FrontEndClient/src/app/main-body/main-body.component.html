@@ -1,1 +1,13 @@
-<p>main-body works!</p>
+<div>
+  <div *ngFor="let dataset of availableDataSets">
+    <input type="checkbox" [(ngModel)]="dataset.show" (click)="updateChart()">
+    {{dataset.name}}
+  </div>
+
+</div>
+
+<div class="chart-container">
+  <canvas id="canvas">
+    {{ chart }}
+  </canvas>
+</div>

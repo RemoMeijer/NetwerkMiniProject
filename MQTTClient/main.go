@@ -21,6 +21,7 @@ const (
 )
 
 var dbClient influxdb2.Client
+var lastData DataStructs.DecodedPayload
 
 // DB params
 const (
@@ -54,17 +55,50 @@ func connectToInfluxDB() (influxdb2.Client, error) {
 }
 
 func insertIntoDB(client influxdb2.Client, data DataStructs.DecodedPayload) {
+	data = cleanData(data)
+	fmt.Println(data)
+
 	// Write data into db
 	writeAPI := client.WriteAPI(dbOrg, dbBucket)
-	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=altitude avg=%d", data.Temp))
-	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=hourrainfall avg=%d", data.Temp))
-	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=light avg=%d", data.Temp))
-	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=pressure avg=%d", data.Temp))
-	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=rainbuckets avg=%d", data.Temp))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=altitude avg=%d", data.Altitude))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=hourrainfall avg=%d", data.HourRainfall))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=light avg=%d", data.Light))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=pressure avg=%d", data.Pressure))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=rainbuckets avg=%d", data.RainBuckets))
 	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=temp avg=%d", data.Temp))
-	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=totalrain avg=%d", data.Temp))
-	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=uvindex avg=%d", data.Temp))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=totalrain avg=%d", data.TotalRain))
+	writeAPI.WriteRecord(fmt.Sprintf("stat,unit=uvindex avg=%d", data.UVIndex))
 	writeAPI.Flush()
+	lastData = data
+
+}
+
+func cleanData(data DataStructs.DecodedPayload) DataStructs.DecodedPayload {
+	if data.Altitude > 10000 {
+		data.Altitude = lastData.Altitude
+	}
+	if data.HourRainfall > 10000 {
+		data.HourRainfall = lastData.HourRainfall
+	}
+	if data.Light > 1000 {
+		data.Light = lastData.Light
+	}
+	if data.Pressure > 200000 {
+		data.Pressure = lastData.Pressure
+	}
+	if data.RainBuckets > lastData.RainBuckets+50 {
+		data.HourRainfall = lastData.HourRainfall
+	}
+	if data.Temp > 60000 {
+		data.Temp = lastData.Temp
+	}
+	if data.TotalRain > lastData.TotalRain+1000 {
+		data.TotalRain = lastData.TotalRain
+	}
+	if data.UVIndex > 10000 {
+		data.UVIndex = lastData.UVIndex
+	}
+	return data
 }
 
 func main() {

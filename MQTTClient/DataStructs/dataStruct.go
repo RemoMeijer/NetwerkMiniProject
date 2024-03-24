@@ -49,6 +49,17 @@ type DecodedPayload struct {
 	UVIndex      int `json:"uvindex"`
 }
 
+type DBPayload struct {
+	Altitude     float64 `json:"altitude"`
+	HourRainfall float64 `json:"hourrainfall"`
+	Light        int     `json:"light"`
+	Pressure     float64 `json:"pressure"`
+	RainBuckets  int     `json:"rainbuckets"`
+	Temp         float64 `json:"temp"`
+	TotalRain    float64 `json:"totalrain"`
+	UVIndex      float64 `json:"uvindex"`
+}
+
 // RxMetadata represents the metadata for received signals
 type RxMetadata struct {
 	GatewayIDs  GatewayIDs `json:"gateway_ids"`

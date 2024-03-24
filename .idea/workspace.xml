@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment="removed web client, gave static ip's">
+    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment="End of day push">
+      <change afterPath="$PROJECT_DIR$/FrontEndClient/src/app/objects/weatherObjects.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEndClient/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEndClient/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEndClient/src/app/http.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/app/http.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FrontEndClient/src/app/main-body/main-body.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/FrontEndClient/src/app/main-body/main-body.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,25 +38,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/remo/NetwerkMiniProject/APIServer&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "master",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "/home/remo/NetwerkMiniProject/MQTTClient",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "vcs.Git",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -69,7 +73,18 @@
       <option name="presentableId" value="Default" />
       <updated>1711033511440</updated>
       <workItem from="1711033512673" duration="46000" />
+      <workItem from="1711232114696" duration="15000" />
+      <workItem from="1711282822399" duration="15000" />
     </task>
+    <task id="LOCAL-00001" summary="End of day push">
+      <option name="closed" value="true" />
+      <created>1711232122785</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1711232122785</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -83,7 +98,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update" />
     <MESSAGE value="removed web client, gave static ip's" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed web client, gave static ip's" />
+    <MESSAGE value="End of day push" />
+    <option name="LAST_COMMIT_MESSAGE" value="End of day push" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
