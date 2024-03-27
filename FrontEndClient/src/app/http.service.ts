@@ -17,26 +17,40 @@ export class HttpService {
 
   constructor(private httpClient: HttpClient) { }
 
+  // Notify API that we want another timeframe
   public postTimeUpdate(s: string) {
-    this.httpClient.post("http://localhost:7080", s).subscribe(reply => {
-      console.log(reply)
-    })
+    const url = 'http://localhost:7080/';
+    const body = `time=${encodeURIComponent(s)}`; // Encode the time string
+    const headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
+
+    this.httpClient.post(url, body, { headers }).subscribe(
+      (response) => {
+        console.log('Time sent successfully:', response);
+      },
+      (error) => {
+        console.error('Error sending time:', error);
+      }
+    );
   }
 
+  // Get the weather data from the API
   public getWeatherData() {
     this.httpClient.get("http://localhost:7080").subscribe(data => {
       this.sortData(data);
     })
   }
 
+  // Sort the incoming JSON from API
   private sortData(data: any): void {
     if (data === null ) {
       console.error("Incorrect data provided");
       return;
     }
 
+    // Empty the arrays so we won't duplicate data
     this.emptyArrays();
 
+    // Sort data by unit values and put in corresponding array
     for(const item of data) {
       if (item.unit === 'altitude') {
         item.value = item.value / 100
@@ -88,6 +102,7 @@ export class HttpService {
     this._uvIndexArray = [];
   }
 
+  // Return specific array based on given string
   public getArrayByName(name: string) {
     switch (name) {
       case 'altitude': return this.altitudeArray;

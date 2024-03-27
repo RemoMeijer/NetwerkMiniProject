@@ -19,8 +19,6 @@ export class MainBodyComponent implements OnInit {
   constructor(private httpService: HttpService) {
   }
 
-  chart: any;
-
   altitudeChart: any;
   hourRainfallChart: any;
   lightChart: any;
@@ -30,6 +28,8 @@ export class MainBodyComponent implements OnInit {
   totalRainChart: any;
   uvIndexChart: any;
 
+  // This was used for 1 graph and 8 lines to toggle the lines
+  // Not needed now
   altitudeChecked: boolean = true;
   hourrainfallChecked: boolean = true;
   lightChecked: boolean = true;
@@ -51,6 +51,7 @@ export class MainBodyComponent implements OnInit {
   ]
 
   ngOnInit(): void {
+    // Init all the graphs
     this.altitudeChart = new Chart('altitudeCanvas', {
       type: 'line',
       data: {
@@ -61,6 +62,11 @@ export class MainBodyComponent implements OnInit {
         animation: false,
         responsive: true,
         maintainAspectRatio: true,
+        elements: {
+          point: {
+            pointStyle: false,
+          }
+        },
         plugins: {
           legend: {
             // @ts-ignore
@@ -80,6 +86,11 @@ export class MainBodyComponent implements OnInit {
         animation: false,
         responsive: true,
         maintainAspectRatio: true,
+        elements: {
+          point: {
+            pointStyle: false,
+          }
+        },
         plugins: {
           legend: {
             // @ts-ignore
@@ -99,6 +110,11 @@ export class MainBodyComponent implements OnInit {
         animation: false,
         responsive: true,
         maintainAspectRatio: true,
+        elements: {
+          point: {
+            pointStyle: false,
+          }
+        },
         plugins: {
           legend: {
             // @ts-ignore
@@ -118,6 +134,11 @@ export class MainBodyComponent implements OnInit {
         animation: false,
         responsive: true,
         maintainAspectRatio: true,
+        elements: {
+          point: {
+            pointStyle: false,
+          }
+        },
         plugins: {
           legend: {
             // @ts-ignore
@@ -137,6 +158,11 @@ export class MainBodyComponent implements OnInit {
         animation: false,
         responsive: true,
         maintainAspectRatio: true,
+        elements: {
+          point: {
+            pointStyle: false,
+          }
+        },
         plugins: {
           legend: {
             // @ts-ignore
@@ -156,6 +182,11 @@ export class MainBodyComponent implements OnInit {
         animation: false,
         responsive: true,
         maintainAspectRatio: true,
+        elements: {
+          point: {
+            pointStyle: false,
+          }
+        },
         plugins: {
           legend: {
             // @ts-ignore
@@ -165,14 +196,16 @@ export class MainBodyComponent implements OnInit {
       }
     });
 
+    // Update graphs each 2.5 seconds or so
     setInterval(() => {
       this.updateCharts();
     }, 2500);
-    
+
     this.updateCharts();
   }
 
   updateCharts() {
+    // Update each chart
     for (let i = 0; i < this.availableDataSets.length; i++) {
       this.updateChart(i)
     }
@@ -180,22 +213,31 @@ export class MainBodyComponent implements OnInit {
 
   updateChart(index: number) {
     const graphColors: string[] = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#00FFFF', '#FF00FF', '#800080', '#008080'];
-    const timePoints: number[] = [];
+    const timePoints: string[] = [];
 
-
+    // Get weather-data by name
     let weatherArray: WeatherObjects[] = this.httpService.getArrayByName(this.availableDataSets[index].name )
     const dataArray: number[] = []
 
+    // Put the weather-data in an array with correct time
     for (let data of weatherArray) {
-      timePoints.push(data.time);
+      const date = new Date(data.time)
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+
+      // Add leading minute zero when minutes < 10
+      const formattedMinutes = minutes < 10 ? '0' + minutes : minutes
+
+      timePoints.push(hours + ':' + formattedMinutes);
       dataArray.push(data.value)
     }
 
+    // Put the weather-data in corresponding graph
     switch (index) {
       case 0:
         this.altitudeChart.data.datasets = [];
         this.altitudeChart.data.datasets.push({
-          label: this.availableDataSets[index].name,
+          label: 'Altitude (m)',
           data: dataArray,
           backgroundColor: graphColors[index],
           borderColor: graphColors[index],
@@ -206,7 +248,7 @@ export class MainBodyComponent implements OnInit {
       case 1:
         this.hourRainfallChart.data.datasets = [];
         this.hourRainfallChart.data.datasets.push({
-          label: this.availableDataSets[index].name,
+          label: 'Rainfall (last hour mm)',
           data: dataArray,
           backgroundColor: graphColors[index],
           borderColor: graphColors[index],
@@ -217,7 +259,7 @@ export class MainBodyComponent implements OnInit {
       case 2:
         this.lightChart.data.datasets = [];
         this.lightChart.data.datasets.push({
-          label: this.availableDataSets[index].name,
+          label: 'Light value (0-800)',
           data: dataArray,
           backgroundColor: graphColors[index],
           borderColor: graphColors[index],
@@ -228,7 +270,7 @@ export class MainBodyComponent implements OnInit {
       case 3:
         this.pressureChart.data.datasets = [];
         this.pressureChart.data.datasets.push({
-          label: this.availableDataSets[index].name,
+          label: 'Pressure (hPa)',
           data: dataArray,
           backgroundColor: graphColors[index],
           borderColor: graphColors[index],
@@ -236,6 +278,7 @@ export class MainBodyComponent implements OnInit {
         this.pressureChart.data.labels = timePoints;
         this.pressureChart.update();
         return
+      // Not fascinating to display
       case 4:
         // this.rainBucketsChart.data.datasets = [];
         // this.rainBucketsChart.data.datasets.push({
@@ -250,7 +293,7 @@ export class MainBodyComponent implements OnInit {
       case 5:
         this.tempChart.data.datasets = [];
         this.tempChart.data.datasets.push({
-          label: this.availableDataSets[index].name,
+          label: 'Temperature (°C)',
           data: dataArray,
           backgroundColor: graphColors[index],
           borderColor: graphColors[index],
@@ -261,7 +304,7 @@ export class MainBodyComponent implements OnInit {
       case 6:
         this.totalRainChart.data.datasets = [];
         this.totalRainChart.data.datasets.push({
-          label: this.availableDataSets[index].name,
+          label: 'Rainfall (total mm)',
           data: dataArray,
           backgroundColor: graphColors[index],
           borderColor: graphColors[index],
@@ -269,6 +312,7 @@ export class MainBodyComponent implements OnInit {
         this.totalRainChart.data.labels = timePoints;
         this.totalRainChart.update();
         return
+      // todo make data ok
       case 7:
         // this.uvIndexChart.data.datasets = [];
         // this.uvIndexChart.data.datasets.push({
@@ -283,6 +327,7 @@ export class MainBodyComponent implements OnInit {
     }
   }
 
+  // Post to API that we want another time
   setTime(s: string) {
     this.httpService.postTimeUpdate(s)
   }

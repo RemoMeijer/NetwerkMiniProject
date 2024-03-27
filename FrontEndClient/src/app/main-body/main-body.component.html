@@ -1,11 +1,13 @@
-<div class="grid grid-cols-4 my-6">
-  <button (click)="setTime('1h')">1h</button>
-  <button (click)="setTime('6h')">6h</button>
-  <button (click)="setTime('1d')">day</button>
-  <button (click)="setTime('2d')">two days</button>
+<div class="grid grid-cols-6 my-6 gap-x-5 mx-10">
+  <button (click)="setTime('30m')"  class="buttonStyling">30 minutes</button>
+  <button (click)="setTime('1h')"  class="buttonStyling">1 hour</button>
+  <button (click)="setTime('3h')"  class="buttonStyling">3 hours</button>
+  <button (click)="setTime('12h')" class="buttonStyling">12 hours</button>
+  <button (click)="setTime('24h')" class="buttonStyling">1 day</button>
+  <button (click)="setTime('48h')" class="buttonStyling">2 days</button>
 </div>
 
-<div class="grid grid-cols-2">
+<div class="grid grid-cols-2 gap-x-5 gap-y-5 my-5 mx-28">
   <div class="chart-container">
     <canvas id="tempCanvas">
       {{ tempChart }}

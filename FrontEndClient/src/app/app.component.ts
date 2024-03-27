@@ -15,10 +15,14 @@ export class AppComponent implements OnInit{
 
   constructor(private httpService: HttpService) {}
 
+  // Get the weather data each 2.5 seconds or so
   ngOnInit(): void {
     setInterval(() => {
       this.httpService.getWeatherData();
-    }, 5000);
+    }, 2500);
+
+    // Init weather data for less waiting time
+    this.httpService.getWeatherData();
   }
 
 }

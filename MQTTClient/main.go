@@ -55,6 +55,7 @@ func connectToInfluxDB() (influxdb2.Client, error) {
 }
 
 func insertIntoDB(client influxdb2.Client, data DataStructs.DecodedPayload) {
+	// Clean extreme outs
 	data = cleanData(data)
 	fmt.Println(data)
 
@@ -73,8 +74,9 @@ func insertIntoDB(client influxdb2.Client, data DataStructs.DecodedPayload) {
 
 }
 
+// Used to filter extreme outs.
 func cleanData(data DataStructs.DecodedPayload) DataStructs.DecodedPayload {
-	if data.Altitude > 10000 {
+	if data.Altitude > 10000 || data.Altitude < lastData.Altitude-200 {
 		data.Altitude = lastData.Altitude
 	}
 	if data.HourRainfall > 10000 {
