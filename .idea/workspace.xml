@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment="Added graphs" />
+    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment=" push">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APIServer/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/APIServer/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB/influxdb.env" beforeDir="false" afterPath="$PROJECT_DIR$/DB/influxdb.env" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,7 +45,7 @@
     "git-widget-placeholder": "master",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/home/remo/NetwerkMiniProject/APIServer",
+    "last_opened_file_path": "/home/remo/NetwerkMiniProject",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "nodejs_interpreter_path": "node",
@@ -107,7 +111,8 @@
     <MESSAGE value="End of day push" />
     <MESSAGE value="Final-ish product" />
     <MESSAGE value="Added graphs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added graphs" />
+    <MESSAGE value=" push" />
+    <option name="LAST_COMMIT_MESSAGE" value=" push" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

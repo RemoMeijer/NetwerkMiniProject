@@ -1,7 +1,9 @@
 package main
 
 import (
+	"APIServer/Structs"
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
@@ -31,63 +33,62 @@ func connectToInfluxDB() (influxdb2.Client, error) {
 }
 
 func fetchFromDB(w http.ResponseWriter, r *http.Request) {
-	fmt.Printf("Hoi from tls\n")
-	//// create data array
-	//var weatherData []Structs.WeatherData
-	//
-	//// Query db with given timeframe
-	//queryAPI := dbClient.QueryAPI(dbOrg)
-	//result, err := queryAPI.Query(context.Background(), `from(bucket: "weather")
-	//		|> range(start: -`+dbTimeQuery+`)
-	//		|> filter(fn: (r) => r["_measurement"] == "stat")
-	//		|> filter(fn: (r) => r["_field"] == "avg")
-	//		|> filter(fn: (r) => r["unit"] == "altitude" or
-	//							 r["unit"] == "hourrainfall" or
-	//				  	 	 	 r["unit"] == "light" or
-	//						     r["unit"] == "pressure" or
-	//							 r["unit"] == "rainbuckets" or
-	//				  	 	 	 r["unit"] == "temp" or
-	//							 r["unit"] == "totalrain" or
-	//				  	 	 	 r["unit"] == "uvindex")`)
-	//if err == nil {
-	//	// Loop trough results
-	//	for result.Next() {
-	//		record := result.Record()
-	//		value, ok := record.Value().(float64)
-	//		if !ok {
-	//			fmt.Println("Error: value not a float64")
-	//			continue
-	//		}
-	//
-	//		// Put results in a WeatherData Object
-	//		data := Structs.WeatherData{
-	//			Time:  record.Time().UnixMilli(), // todo -> better to get time form db
-	//			Unit:  record.ValueByKey("unit").(string),
-	//			Value: value,
-	//		}
-	//		weatherData = append(weatherData, data)
-	//	}
-	//	if result.Err() != nil {
-	//		fmt.Printf("query parsing error: %s\n", result.Err().Error())
-	//	}
-	//
-	//	// Create JSON from weather-data
-	//	jsonWeatherData, jsonErr := json.Marshal(weatherData)
-	//	if jsonErr != nil {
-	//		fmt.Printf("JSON marshaling error: %s\n", jsonErr.Error())
-	//	}
-	//
-	//	// Send off data
-	//	w.Header().Set("Content-Type", "application/json")
-	//	w.WriteHeader(http.StatusOK)
-	//	_, writeErr := w.Write(jsonWeatherData)
-	//	if writeErr != nil {
-	//		return
-	//	}
-	//
-	//} else {
-	//	panic(err)
-	//}
+	// create data array
+	var weatherData []Structs.WeatherData
+
+	// Query db with given timeframe
+	queryAPI := dbClient.QueryAPI(dbOrg)
+	result, err := queryAPI.Query(context.Background(), `from(bucket: "weather")
+			|> range(start: -`+dbTimeQuery+`)
+			|> filter(fn: (r) => r["_measurement"] == "stat")
+			|> filter(fn: (r) => r["_field"] == "avg")
+			|> filter(fn: (r) => r["unit"] == "altitude" or
+								 r["unit"] == "hourrainfall" or
+					  	 	 	 r["unit"] == "light" or
+							     r["unit"] == "pressure" or
+								 r["unit"] == "rainbuckets" or
+					  	 	 	 r["unit"] == "temp" or
+								 r["unit"] == "totalrain" or
+					  	 	 	 r["unit"] == "uvindex")`)
+	if err == nil {
+		// Loop trough results
+		for result.Next() {
+			record := result.Record()
+			value, ok := record.Value().(float64)
+			if !ok {
+				fmt.Println("Error: value not a float64")
+				continue
+			}
+
+			// Put results in a WeatherData Object
+			data := Structs.WeatherData{
+				Time:  record.Time().UnixMilli(), // todo -> better to get time form db
+				Unit:  record.ValueByKey("unit").(string),
+				Value: value,
+			}
+			weatherData = append(weatherData, data)
+		}
+		if result.Err() != nil {
+			fmt.Printf("query parsing error: %s\n", result.Err().Error())
+		}
+
+		// Create JSON from weather-data
+		jsonWeatherData, jsonErr := json.Marshal(weatherData)
+		if jsonErr != nil {
+			fmt.Printf("JSON marshaling error: %s\n", jsonErr.Error())
+		}
+
+		// Send off data
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, writeErr := w.Write(jsonWeatherData)
+		if writeErr != nil {
+			return
+		}
+
+	} else {
+		panic(err)
+	}
 }
 
 // Allow CORS
@@ -96,7 +97,7 @@ func addCORSHeaders(handler http.Handler) http.Handler {
 		// Allow requests from all origins
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 
-		// Set other CORS headers as needed
+		// Set other CORS headers
 		w.Header().Set("Access-Control-Allow-Methods", "GET")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
@@ -126,11 +127,13 @@ func main() {
 	time.Sleep(2000 * time.Millisecond)
 
 	dbTimeQuery = "1h" // standard time value
-	//dbClientInit, dbErr := connectToInfluxDB()
-	//if dbErr != nil {
-	//	log.Fatalf("Connection to db failed: %v", dbErr)
-	//}
-	//dbClient = dbClientInit
+
+	// connect to db
+	dbClientInit, dbErr := connectToInfluxDB()
+	if dbErr != nil {
+		log.Fatalf("Connection to db failed: %v", dbErr)
+	}
+	dbClient = dbClientInit
 
 	// Setup routing
 	r := mux.NewRouter()
@@ -144,6 +147,7 @@ func main() {
 	}
 	tlsConfig := &tls.Config{
 		Certificates: []tls.Certificate{serverTLSCert},
+		MinVersion:   tls.VersionTLS13,
 	}
 
 	// Start server
