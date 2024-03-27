@@ -1,8 +1,7 @@
 package main
 
 import (
-	"APIServer/Structs"
-	"encoding/json"
+	"crypto/tls"
 	"fmt"
 	"github.com/gorilla/mux"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
@@ -32,62 +31,63 @@ func connectToInfluxDB() (influxdb2.Client, error) {
 }
 
 func fetchFromDB(w http.ResponseWriter, r *http.Request) {
-	// create data array
-	var weatherData []Structs.WeatherData
-
-	// Query db with given timeframe
-	queryAPI := dbClient.QueryAPI(dbOrg)
-	result, err := queryAPI.Query(context.Background(), `from(bucket: "weather")
-			|> range(start: -`+dbTimeQuery+`)
-  			|> filter(fn: (r) => r["_measurement"] == "stat")
-  			|> filter(fn: (r) => r["_field"] == "avg")
-  			|> filter(fn: (r) => r["unit"] == "altitude" or 
-								 r["unit"] == "hourrainfall" or
-					  	 	 	 r["unit"] == "light" or 
-							     r["unit"] == "pressure" or 
-								 r["unit"] == "rainbuckets" or
-					  	 	 	 r["unit"] == "temp" or
-								 r["unit"] == "totalrain" or
-					  	 	 	 r["unit"] == "uvindex")`)
-	if err == nil {
-		// Loop trough results
-		for result.Next() {
-			record := result.Record()
-			value, ok := record.Value().(float64)
-			if !ok {
-				fmt.Println("Error: value not a float64")
-				continue
-			}
-
-			// Put results in a WeatherData Object
-			data := Structs.WeatherData{
-				Time:  record.Time().UnixMilli(), // todo -> better to get time form db
-				Unit:  record.ValueByKey("unit").(string),
-				Value: value,
-			}
-			weatherData = append(weatherData, data)
-		}
-		if result.Err() != nil {
-			fmt.Printf("query parsing error: %s\n", result.Err().Error())
-		}
-
-		// Create JSON from weather-data
-		jsonWeatherData, jsonErr := json.Marshal(weatherData)
-		if jsonErr != nil {
-			fmt.Printf("JSON marshaling error: %s\n", jsonErr.Error())
-		}
-
-		// Send off data
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		_, writeErr := w.Write(jsonWeatherData)
-		if writeErr != nil {
-			return
-		}
-
-	} else {
-		panic(err)
-	}
+	fmt.Printf("Hoi from tls\n")
+	//// create data array
+	//var weatherData []Structs.WeatherData
+	//
+	//// Query db with given timeframe
+	//queryAPI := dbClient.QueryAPI(dbOrg)
+	//result, err := queryAPI.Query(context.Background(), `from(bucket: "weather")
+	//		|> range(start: -`+dbTimeQuery+`)
+	//		|> filter(fn: (r) => r["_measurement"] == "stat")
+	//		|> filter(fn: (r) => r["_field"] == "avg")
+	//		|> filter(fn: (r) => r["unit"] == "altitude" or
+	//							 r["unit"] == "hourrainfall" or
+	//				  	 	 	 r["unit"] == "light" or
+	//						     r["unit"] == "pressure" or
+	//							 r["unit"] == "rainbuckets" or
+	//				  	 	 	 r["unit"] == "temp" or
+	//							 r["unit"] == "totalrain" or
+	//				  	 	 	 r["unit"] == "uvindex")`)
+	//if err == nil {
+	//	// Loop trough results
+	//	for result.Next() {
+	//		record := result.Record()
+	//		value, ok := record.Value().(float64)
+	//		if !ok {
+	//			fmt.Println("Error: value not a float64")
+	//			continue
+	//		}
+	//
+	//		// Put results in a WeatherData Object
+	//		data := Structs.WeatherData{
+	//			Time:  record.Time().UnixMilli(), // todo -> better to get time form db
+	//			Unit:  record.ValueByKey("unit").(string),
+	//			Value: value,
+	//		}
+	//		weatherData = append(weatherData, data)
+	//	}
+	//	if result.Err() != nil {
+	//		fmt.Printf("query parsing error: %s\n", result.Err().Error())
+	//	}
+	//
+	//	// Create JSON from weather-data
+	//	jsonWeatherData, jsonErr := json.Marshal(weatherData)
+	//	if jsonErr != nil {
+	//		fmt.Printf("JSON marshaling error: %s\n", jsonErr.Error())
+	//	}
+	//
+	//	// Send off data
+	//	w.Header().Set("Content-Type", "application/json")
+	//	w.WriteHeader(http.StatusOK)
+	//	_, writeErr := w.Write(jsonWeatherData)
+	//	if writeErr != nil {
+	//		return
+	//	}
+	//
+	//} else {
+	//	panic(err)
+	//}
 }
 
 // Allow CORS
@@ -122,24 +122,40 @@ func updateTime(writer http.ResponseWriter, request *http.Request) {
 }
 
 func main() {
+	// Wait a bit for the db to start up
 	time.Sleep(2000 * time.Millisecond)
+
 	dbTimeQuery = "1h" // standard time value
-	dbClient, _ = connectToInfluxDB()
+	//dbClientInit, dbErr := connectToInfluxDB()
+	//if dbErr != nil {
+	//	log.Fatalf("Connection to db failed: %v", dbErr)
+	//}
+	//dbClient = dbClientInit
 
 	// Setup routing
 	r := mux.NewRouter()
 	r.HandleFunc("/", fetchFromDB).Methods("GET")
 	r.HandleFunc("/", updateTime).Methods("POST")
 
+	// Add the tls, much important
+	serverTLSCert, certErr := tls.LoadX509KeyPair("./Keys/api-server.crt", "./Keys/api-server.key")
+	if certErr != nil {
+		log.Fatalf("Error loading cert and key file: %v", certErr)
+	}
+	tlsConfig := &tls.Config{
+		Certificates: []tls.Certificate{serverTLSCert},
+	}
+
 	// Start server
 	fmt.Println("Starting Server on port 7080")
 	srv := &http.Server{
 		Handler:      addCORSHeaders(r),
 		Addr:         "0.0.0.0:7080",
+		TLSConfig:    tlsConfig,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
 	// Listen for connections until fatal crash
-	log.Fatal(srv.ListenAndServe())
+	log.Fatal(srv.ListenAndServeTLS("", ""))
 }

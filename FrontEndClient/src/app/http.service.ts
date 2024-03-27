@@ -35,9 +35,11 @@ export class HttpService {
 
   // Get the weather data from the API
   public getWeatherData() {
-    this.httpClient.get("http://localhost:7080").subscribe(data => {
+    this.httpClient.get("https://localhost:7080").subscribe(data => {
       this.sortData(data);
-    })
+    }, error => {
+      console.error("SSL validation error:", error);
+      });
   }
 
   // Sort the incoming JSON from API
