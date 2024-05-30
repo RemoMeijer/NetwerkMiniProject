@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment=" push final final">
+    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment="Added them secrets, i wanna sleep">
+      <change afterPath="$PROJECT_DIR$/.idea/go.imports.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APIServer/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/APIServer/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APIServer/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/APIServer/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APIServer/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/APIServer/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB/influxdb.env" beforeDir="false" afterPath="$PROJECT_DIR$/DB/influxdb.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTTClient/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/MQTTClient/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTTClient/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/MQTTClient/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MQTTClient/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/MQTTClient/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +152,8 @@
     <MESSAGE value="Added graphs" />
     <MESSAGE value=" push" />
     <MESSAGE value=" push final final" />
-    <option name="LAST_COMMIT_MESSAGE" value=" push final final" />
+    <MESSAGE value="Added them secrets, i wanna sleep" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added them secrets, i wanna sleep" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
