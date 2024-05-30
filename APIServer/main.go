@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
+	"github.com/ijustfool/docker-secrets"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"golang.org/x/net/context"
 	"log"
@@ -23,13 +24,23 @@ const (
 )
 
 func connectToInfluxDB() (influxdb2.Client, error) {
+	// Read the InfluxDB URL from an environment variable
+	influxdbURL := os.Getenv("INFLUXDB_URL")
+	if influxdbURL == "" {
+		log.Fatal("INFLUXDB_URL environment variable is not set")
+	}
+
+	// Read the InfluxDB API token from the Docker secret file
+	dockerSecrets, _ := secrets.NewDockerSecrets("")
+	apiToken, _ := dockerSecrets.Get("influxdb_api_write_token")
+
 	// Connect to the influx database
-	client := influxdb2.NewClient(os.Getenv("INFLUXDB_URL"), os.Getenv("INFLUXDB_API_TOKEN"))
+	client := influxdb2.NewClient(influxdbURL, string(apiToken))
 
 	// validate client connection health
-	_, err := client.Health(context.Background())
+	_, heathErr := client.Health(context.Background())
 
-	return client, err
+	return client, heathErr
 }
 
 func fetchFromDB(w http.ResponseWriter, r *http.Request) {

@@ -1,52 +1,73 @@
+version: '3.8'
+
 networks:
   static-network:
     ipam:
       config:
-        - subnet: 172.20.0.0/16
+        - subnet: 172.25.0.0/16
 
 services:
   mqttclient:
     build:
       context: ./MQTTClient
-      target: final
+      dockerfile: Dockerfile
+    image: netwerkminiproject-mqttclient:latest
     ports:
       - 8111:8111
     env_file:
       - "./DB/influxdb.env"
-    develop:
-      watch:
-        - path: ./MQTTClient
-          action: rebuild
+    secrets:
+      - influxdb_api_write_token
     networks:
       static-network:
-        ipv4_address: 172.20.0.4
+        ipv4_address: 172.25.0.4
+
   api:
     build:
       context: ./APIServer
+      dockerfile: Dockerfile
+    image: netwerkminiproject-api:latest
     ports:
       - 7080:7080
     env_file:
       - "./DB/influxdb.env"
-    develop:
-      watch:
-        - path: ./APIServer
-          action: rebuild
+    secrets:
+      - influxdb_api_read_token
     networks:
       static-network:
-        ipv4_address: 172.20.0.5
+        ipv4_address: 172.25.0.5
+
   influxdb:
-    image: influxdb:2.0.7
-    env_file:
-      - "./DB/influxdb.env"
+    image: influxdb:latest
     environment:
       DOCKER_INFLUXDB_INIT_MODE: setup
-      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_USERNAME}
-      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_PASSWORD}
       DOCKER_INFLUXDB_INIT_ORG: iot
       DOCKER_INFLUXDB_INIT_BUCKET: weather
-      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN}
     ports:
       - "8086:8086"
     networks:
       static-network:
-        ipv4_address: 172.20.0.3
+        ipv4_address: 172.25.0.3
+    secrets:
+      - influxdb_username
+      - influxdb_password
+      - influxdb_token
+    entrypoint: >
+      sh -c '
+      export DOCKER_INFLUXDB_INIT_USERNAME=$$(cat /run/secrets/influxdb_username) &&
+      export DOCKER_INFLUXDB_INIT_PASSWORD=$$(cat /run/secrets/influxdb_password) &&
+      export DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=$$(cat /run/secrets/influxdb_token) &&
+      influxd
+      '
+
+secrets:
+  influxdb_username:
+    external: true
+  influxdb_password:
+    external: true
+  influxdb_token:
+    external: true
+  influxdb_api_read_token:
+    external: true
+  influxdb_api_write_token:
+    external: true

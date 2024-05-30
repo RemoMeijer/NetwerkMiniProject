@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/eclipse/paho.mqtt.golang"
+	"github.com/ijustfool/docker-secrets"
 	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"golang.org/x/net/context"
+	"log"
 	"os"
 	"time"
 )
@@ -45,13 +47,21 @@ func handleMqttMessage(client mqtt.Client, msg mqtt.Message) {
 }
 
 func connectToInfluxDB() (influxdb2.Client, error) {
+	// Read the InfluxDB URL from an environment variable
+	influxdbURL := os.Getenv("INFLUXDB_URL")
+	if influxdbURL == "" {
+		log.Fatal("INFLUXDB_URL environment variable is not set")
+	}
+	dockerSecrets, _ := secrets.NewDockerSecrets("")
+	apiToken, _ := dockerSecrets.Get("influxdb_api_write_token")
+
 	// Connect to the influx database
-	client := influxdb2.NewClient(os.Getenv("INFLUXDB_URL"), os.Getenv("INFLUXDB_TOKEN"))
+	client := influxdb2.NewClient(influxdbURL, string(apiToken))
 
 	// validate client connection health
-	_, err := client.Health(context.Background())
+	_, healthErr := client.Health(context.Background())
 
-	return client, err
+	return client, healthErr
 }
 
 func insertIntoDB(client influxdb2.Client, data DataStructs.DecodedPayload) {

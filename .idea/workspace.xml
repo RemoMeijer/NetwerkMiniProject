@@ -4,25 +4,46 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment=" push">
+    <list default="true" id="d251dde8-52a9-475d-99d4-d2272627c7ae" name="Changes" comment=" push final final">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APIServer/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/APIServer/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APIServer/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/APIServer/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/APIServer/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/APIServer/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DB/influxdb.env" beforeDir="false" afterPath="$PROJECT_DIR$/DB/influxdb.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTTClient/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/MQTTClient/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTTClient/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/MQTTClient/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MQTTClient/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/MQTTClient/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="GOROOT" url="file://$USER_HOME$/sdk/go1.22.1" />
+  <component name="GOROOT" url="file://$PROJECT_DIR$/../sdk/go1.22.1" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;RemoMeijer&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/RemoMeijer/NetwerkMiniProject.git&quot;,
+    &quot;accountId&quot;: &quot;764b498f-07c8-44d9-8c84-39949460906a&quot;
+  }
+}</component>
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="true" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="false" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -37,6 +58,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.APIServer/Dockerfile.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
@@ -45,20 +67,43 @@
     "git-widget-placeholder": "master",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/home/remo/NetwerkMiniProject",
+    "last_opened_file_path": "/home/remo/Desktop/IWSN-miniproject",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.stylelint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.stylelint": "",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "settings.editor.selected.configurable": "actions.on.save",
     "ts.external.directory.path": "/home/remo/NetwerkMiniProject/FrontEndClient/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="APIServer/Dockerfile" type="docker-deploy" factoryName="dockerfile" temporary="true" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="containerName" value="" />
+          <option name="sourceFilePath" value="APIServer/Dockerfile" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="dockerfile" temporary="true">
+      <deployment type="dockerfile" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Docker.APIServer/Dockerfile" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-gosdk-2946fb9b3188-155fe4b6e3a0-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-233.14808.20" />
+        <option value="bundled-gosdk-33c477a475b1-e0158606a674-org.jetbrains.plugins.go.sharedIndexes.bundled-GO-241.17011.92" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-GO-241.17011.92" />
       </set>
     </attachedChunks>
   </component>
@@ -90,6 +135,7 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.env" />
     <option featureType="dependencySupport" implementationName="javascript:npm:tailwindcss" />
     <option featureType="dependencySupport" implementationName="javascript:npm:karma" />
     <option featureType="dependencySupport" implementationName="javascript:npm:@angular/core" />
@@ -112,7 +158,8 @@
     <MESSAGE value="Final-ish product" />
     <MESSAGE value="Added graphs" />
     <MESSAGE value=" push" />
-    <option name="LAST_COMMIT_MESSAGE" value=" push" />
+    <MESSAGE value=" push final final" />
+    <option name="LAST_COMMIT_MESSAGE" value=" push final final" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
