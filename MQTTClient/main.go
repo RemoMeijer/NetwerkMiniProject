@@ -13,12 +13,12 @@ import (
 	"time"
 )
 
-// MQTT client params
+// MQTT client params, please use own keys, This key and password is not a valid key
 const (
 	brokerAddress = "eu1.cloud.thethings.network:1883"
-	topic         = "v3/loratestremcomeijer@ttn/devices/eui-2cf7f1203230bfe7/up"
-	username      = "loratestremcomeijer@ttn"
-	password      = "NNSXS.PGRMEB2CKPGBXTVUHOGZ2LQW46PPTM2VSG5L4YA.XVY2DJXIRDSTTTJPAFMP35PSBTPQ7UUZP3XI45HWSVE7JGTEQTTQ"
+	topic         = "v3/loratest/devices/eui-abc/up"
+	username      = "...@ttn"
+	password      = "NNSXS..."
 	qos           = 1
 )
 
